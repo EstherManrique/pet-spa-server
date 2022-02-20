@@ -1,0 +1,13 @@
+const { timeStamp } = require("console")
+
+const x = {name: 'PS Centro', address: 'Bolivar # 22', email: 'pscentro@petspa.com.mx', phone: '5555555555', latitude: 19.434261420419002, longitude: -99.13813535812919}
+19.434261420419002, -99.13813535812919
+const y = {
+  name: "Grooming", description: "Grooming is the set of canine and feline hairdressing techniques that maintain the good condition of the coat of dogs and cats, guaranteeing their hygienic and healthy well-being and giving them a style according to their breed.", price: 200
+}
+
+const z = {clientName: "Dianyela Maldonado", petName: "Mora", date: 1650369600, status: "Pending", storeId: "62114af8f9470329c312795e", serviceId: "62114c3ef9470329c312795f"}
+
+const a = {name: "Eduardo Moreno", userName: "laloMoreno", password: ""}
+
+const b = {name: "Betsabe Ortegón", userName: "BetsabeOrtegon", password: ""}
