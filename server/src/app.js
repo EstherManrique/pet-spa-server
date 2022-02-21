@@ -1,11 +1,22 @@
 'use strict'
+/* if(process.env.NODE_ENV !== 'production') {
+  // Manage enenvironmental variables
+  require('dotenv').config();
+}; */
 
-// Cargar modulos para crear el servidor
+// Manage enenvironmental variables
+require('dotenv').config();
+
+// Getting modules to create server
 const express = require('express');
-const bodyParser = require('body-parser');
+const path = require('path');
+// const bodyParser = require('body-parser');
 
-// Ejecutar express (http)
+// Initializations express (http)
 const app = express();
+
+// Settings
+app.set('port', process.env.PORT || 4000);
 
 // Cargar ficheros rutas
 const storeRoutes = require('./routes/store');
@@ -15,8 +26,10 @@ const managerRoutes = require('./routes/manager');
 const administratorRoutes = require('./routes/administrator');
 
 // Middlwares
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+// app.use(bodyParser.urlencoded({extended: false}));
+// app.use(bodyParser.json());
 
 // Cors
 
@@ -26,6 +39,11 @@ app.use('/api', serviceRoutes);
 app.use('/api', reservationRoutes);
 app.use('/api', managerRoutes);
 app.use('/api', administratorRoutes);
+
+// Satic files
+app.use(express.static(path.join(__dirname, './public')));
+
+
 
 // Exportar módulo 
 module.exports = app;
