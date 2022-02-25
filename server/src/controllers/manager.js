@@ -11,10 +11,10 @@ const controller = {
     return response.status(200).send(managers);
   },
   save: async (request, response) => {
-    const params = request.body;
-    console.log(params);
+    const {name, userName, password, storeId} = request.body;
+    console.log(request.body);
 
-   const newManager = Manager({params});
+   const newManager = Manager({name, userName, password, storeId});
    await newManager.save();
    response.json({message: 'Manager saved'});
   }
