@@ -13,6 +13,11 @@ const controller = {
     const newAdminstrator = Administrator({name, userName, password});
     await newAdminstrator.save();
     response.json({message: 'Adminstrator saved'});
+  },
+  delete: async (request, response) => {
+    const deleteAdministrator = await Administrator.findByIdAndDelete(request.params.id);
+    console.log('Manager Deleted:', deleteAdministrator);
+    response.send('Administrator Deleted');
   }
 };
 
