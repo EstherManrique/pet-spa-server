@@ -13,6 +13,11 @@ const controller = {
     const newStore = Store({name, address, email, phone, longitude, latitude});
     await newStore.save();
     response.json({message: 'Store saved'});
+  },
+  delete: async (request, response) => {
+    const deleteStore = await Store.findByIdAndDelete(request.params.id);
+    console.log('Store Deleted:', deleteStore);
+    response.send('Store Deleted');
   }
 };
 

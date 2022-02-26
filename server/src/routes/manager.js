@@ -9,6 +9,8 @@ router.get('/manager', managerController.list);
 
 router.post('/manager', managerController.save);
 
+router.delete('/manager/:id',managerController.delete);
+
 
 
 

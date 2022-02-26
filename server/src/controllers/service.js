@@ -13,6 +13,11 @@ const controller = {
     const newService = Service({name, description, price});
     await newService.save();
     response.json({message: 'Service saved'});
+  },
+  delete: async (request, response) => {
+    const deleteService = await Service.findByIdAndDelete(request.params.id);
+    console.log('Service Deleted:', deleteService);
+    response.send('Service Deleted');
   }
 };
 

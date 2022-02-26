@@ -1,53 +1,49 @@
-'use strict'
-const validator = require('validator');
+"use strict";
+const validator = require("validator");
 
-const mongoose = require('mongoose');
-const Reservation = require('../models/reservation');
+const mongoose = require("mongoose");
+const Reservation = require("../models/reservation");
 
 const controller = {
   list: async (request, response) => {
-    const reservations = await Reservation.find({}).populate({
-      path: 'storeId',
-      model: 'Store'
-    }).populate({
-      path:'serviceId',
-      model:'Service'
-    })
-    .exec();
+    const reservations = await Reservation.find({})
+      .populate({
+        path: "storeId",
+        model: "Store",
+      })
+      .populate({
+        path: "serviceId",
+        model: "Service",
+      })
+      .exec();
     return response.status(200).send(reservations);
   },
   save: async (request, response) => {
     // Recoger parametros del POST
-    const params = request.body;
+    const { clientName, petName, date, status, storeId, serviceId } =
+      request.body;
+    console.log(request.body);
 
-    // Validar datos con validator()
-    let validateClientName;
-    let validatePetName;
-    try {
-      validateClientName = !validator.isEmpty(params.name);
-      validatePetName = validator.trim(params.petName) && !validator.isEmpty(params.petName);
-    } catch (error) {
-      return response.status(400).send({
-        message: error.message,
-      });
-    }
+    const newReservation = Reservation({
+      clientName,
+      petName,
+      date,
+      status,
+      storeId,
+      serviceId,
+    });
+    await newReservation.save();
+    response.send({ message: "Reservation Saved" });
+  },
+  delete: async (request, response) => {
+    const deleteReservation = await Reservation.findByIdAndDelete(
+      request.params.id
+    );
+    console.log("Reservation Deleted:", deleteReservation);
+    response.send("Reservation Deleted");
+  },
 
-    if(validateClientName && validatePetName) {
-      // Crear el objeto a guardar
-      // Asignar valores
-      // Guardar la reservation
-      // Devolver respuesta
-      
-      return response.status(200).send({
-        reservation: params
-      })
-    } else {
-      return response.status(400).send({
-        message: 'Faltan datos',
-      });
-    }
-
-    /* const reservation = await new Reservation({
+  /* const reservation = await new Reservation({
       clientName: 'Dianyela Maldonado',
       petName: 'Mora',
       date: Date.now(),
@@ -58,8 +54,6 @@ const controller = {
     reservation.save((err, results) => {
       console.log(results._id);
     }); */
-    
-  }
 };
 
 module.exports = controller;

@@ -8,5 +8,7 @@ router.get('/services', serviceController.list);
 
 router.post('/services', serviceController.save);
 
+router.delete('/services/:id', serviceController.delete);
+
 
 module.exports = router;
