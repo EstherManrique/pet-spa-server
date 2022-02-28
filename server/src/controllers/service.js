@@ -18,6 +18,19 @@ const controller = {
     const deleteService = await Service.findByIdAndDelete(request.params.id);
     console.log('Service Deleted:', deleteService);
     response.send('Service Deleted');
+  },
+  update: async(request, response) => {
+    const updateServiceId = await request.params.id;
+    console.log('Service Updated',updateServiceId);
+
+    const params = request.body;
+
+    Service.findOneAndUpdate({_id: updateServiceId}, params, {new: true}, () => {
+      return response.status(200).send({
+        status: 'Success, Service Updated',
+        service: params
+      });
+    });
   }
 };
 

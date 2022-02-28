@@ -10,4 +10,6 @@ router.post('/reservations', reservationController.save);
 
 router.delete('/reservations/:id', reservationController.delete);
 
+router.put('/reservations/:id', reservationController.update);
+
 module.exports = router;

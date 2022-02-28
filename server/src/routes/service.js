@@ -10,5 +10,7 @@ router.post('/services', serviceController.save);
 
 router.delete('/services/:id', serviceController.delete);
 
+router.put('/services/:id', serviceController.update);
+
 
 module.exports = router;

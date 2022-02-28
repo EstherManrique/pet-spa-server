@@ -12,6 +12,8 @@ const reservationSchema = new Schema({
     default: Date.now
   },
   status: String,
+  clientEmail: String,
+  clientPhone: Number,
   storeId: {
     type: Schema.ObjectId,
     ref: "Store",
