@@ -6,8 +6,7 @@ const storeSchema = new Schema({
   address: String,
   email: String,
   phone: Number,
-  longitude: Number,
-  latitude: Number
+  location: String
 });
 
 module.exports = mongoose.model('Store', storeSchema);

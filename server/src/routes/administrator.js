@@ -10,5 +10,6 @@ router.post('/administrator', administratorController.save);
 
 router.delete('/administrator/:id', administratorController.delete);
 
+router.put('/administrator/:id', administratorController.update);
 
 module.exports = router;
