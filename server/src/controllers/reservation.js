@@ -1,7 +1,7 @@
 "use strict";
 const validator = require("validator");
 
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const Reservation = require("../models/reservation");
 
 const controller = {
@@ -110,6 +110,7 @@ const controller = {
       () => {
         return response.status(200).send({
           status: "Success, Reservation Updated",
+          reservation: params
         });
       }
     );

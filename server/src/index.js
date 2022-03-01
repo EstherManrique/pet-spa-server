@@ -1,4 +1,5 @@
 "use strict";
+// Conect to DB
 const mongoose = require("mongoose");
 const app = require('./app');
 // const port = 3001;
