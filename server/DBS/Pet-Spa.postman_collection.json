@@ -1,0 +1,844 @@
+{
+	"info": {
+		"_postman_id": "c40f0201-bf61-44de-a875-ba92b5fca53e",
+		"name": "Pet-Spa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Stores",
+			"item": [
+				{
+					"name": "POST_Stores",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "PS Del Valle 9",
+									"type": "default"
+								},
+								{
+									"key": "address",
+									"value": "Gabriel # 801",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "psdelvalle8@gmail.com",
+									"type": "default"
+								},
+								{
+									"key": "phone",
+									"value": "5555889588",
+									"type": "default"
+								},
+								{
+									"key": "location",
+									"value": "19.34130319364842, -99.13598653228033",
+									"type": "default"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/stores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_Stores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/stores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_Store",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/stores/621e6b2b26d34d98a85768e1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"stores",
+								"621e6b2b26d34d98a85768e1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE_Store",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "PS Del Valle 11",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "Gabriel Mancera # 801",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "psdelvalle8gmail.com",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "phone",
+									"value": "5555889999",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "19.416876803718104, -99.16652488809709",
+									"type": "default",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/stores/621e7f8dea4860e218ae7e73",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"stores",
+								"621e7f8dea4860e218ae7e73"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Services",
+			"item": [
+				{
+					"name": "GET_Services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/services",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_Service",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Guarderia",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "Servicio de Guarderia",
+									"type": "default"
+								},
+								{
+									"key": "price",
+									"value": "200",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/services",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_Service",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/services/62195798cffc6820dc21ba04",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"services",
+								"62195798cffc6820dc21ba04"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE_Service",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "Servicio de Vacunación",
+									"type": "default"
+								},
+								{
+									"key": "price",
+									"value": "",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/services/621d054c7cee5b3cd72beab7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"services",
+								"621d054c7cee5b3cd72beab7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Managers",
+			"item": [
+				{
+					"name": "GET_managers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/manager",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"manager"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_manager",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Kevin García",
+									"type": "default"
+								},
+								{
+									"key": "userName",
+									"value": "kevonGcia",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "manager",
+									"type": "default"
+								},
+								{
+									"key": "storeId",
+									"value": "621ab5b1e521cf6f0721bb55",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/manager",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"manager"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_Manager",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/manager/62195c00b0360509f2c5e5a2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"manager",
+								"62195c00b0360509f2c5e5a2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE_manager",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Kevin García",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "userName",
+									"value": "kevinGcia",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "manager",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "storeId",
+									"value": "621ab5b1e521cf6f0721bb55",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/manager/621d1dfbaad5232d99a32a9e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"manager",
+								"621d1dfbaad5232d99a32a9e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Administrators",
+			"item": [
+				{
+					"name": "POST_administrator",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Alberto García",
+									"type": "default"
+								},
+								{
+									"key": "userName",
+									"value": "betoGarcia",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "default"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/administrator",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"administrator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_administrators",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/administrator",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"administrator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_Administrator",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/administrator/62191d32444cdf3afaa5f3e6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"administrator",
+								"62191d32444cdf3afaa5f3e6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE_administrator",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Ruben Villaseñor",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "userName",
+									"value": "rubenVillaseñor",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "adminRV",
+									"type": "default"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/administrator/621d2132e0e68b6fc7d1e403",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"administrator",
+								"621d2132e0e68b6fc7d1e403"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservations",
+			"item": [
+				{
+					"name": "POST_reservation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "clientName",
+									"value": "Laura Moreno",
+									"type": "default"
+								},
+								{
+									"key": "petName",
+									"value": "Fifi",
+									"type": "default"
+								},
+								{
+									"key": "date",
+									"value": "2022-03-05T12:00:00.906Z",
+									"type": "default"
+								},
+								{
+									"key": "status",
+									"value": "pending",
+									"type": "default"
+								},
+								{
+									"key": "clientEmail",
+									"value": "lau@gmail.com",
+									"type": "default"
+								},
+								{
+									"key": "clientPhone",
+									"value": "044555599887777",
+									"type": "default"
+								},
+								{
+									"key": "storeId",
+									"value": "621ab2f67470c9c4ff8e6227",
+									"type": "default"
+								},
+								{
+									"key": "serviceId",
+									"value": "621d057c7cee5b3cd72beaba",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/reservations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_reservations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/reservations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_reservations_filtered",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/reservations?storeId=621ab2f67470c9c4ff8e6227",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"reservations"
+							],
+							"query": [
+								{
+									"key": "storeId",
+									"value": "621ab2f67470c9c4ff8e6227"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_Reservation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/reservations/621d6af217a1d003146601df",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"reservations",
+								"621d6af217a1d003146601df"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE_reservation",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "clientName",
+									"value": "Patricia Jiménez Chavarría",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "petName",
+									"value": "Fiona",
+									"type": "default"
+								},
+								{
+									"key": "date",
+									"value": "2022-03-20T11:00:00.906Z",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "pending",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "clientEmail",
+									"value": "patito@gmail.com",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "clientPhone",
+									"value": "0445555993322",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "storeId",
+									"value": "621ab5b1e521cf6f0721bb55",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "serviceId",
+									"value": "621d054c7cee5b3cd72beab7",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/reservations/621d741d84b6f58f1049f66e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"reservations",
+								"621d741d84b6f58f1049f66e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
