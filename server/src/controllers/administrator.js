@@ -8,32 +8,30 @@ const controller = {
   },
   save: async (request, response) => {
     const { name, userName, password } = request.body;
-    console.log(request.body);
-
     const newAdminstrator = Administrator({ name, userName, password });
     await newAdminstrator.save();
-    response.json({ message: "Adminstrator saved" });
+    return response.status(200).send({
+      Message: "Success Administrator Saved",
+      administrator: request.params.id,
+    });
   },
   delete: async (request, response) => {
     const deleteAdministrator = await Administrator.findByIdAndDelete(
       request.params.id
     );
-    console.log("Manager Deleted:", deleteAdministrator);
-    response.send("Administrator Deleted");
+    return response.status(200).send({
+      Message: "Success Administrator Deleted",
+      administrator: request.params.id,
+    });
   },
   update: async (request, response) => {
-    const updateAdministratorId = await request.params.id;
-    console.log("Updated Adminitrator", updateAdministratorId);
-
+    const updateAdministratorId = request.params.id;
     const params = request.body;
 
-    Administrator.findOneAndUpdate(
-      { _id: updateAdministratorId },
-      params,
-      { new: true },
+   await Administrator.findByIdAndUpdate(updateAdministratorId, params,
       () => {
         return response.status(200).send({
-          status: "Success Administrator Updated",
+          Message: "Success Administrator Updated",
           administrator: params,
         });
       }

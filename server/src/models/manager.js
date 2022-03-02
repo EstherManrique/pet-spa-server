@@ -10,7 +10,12 @@ const managerSchema = new Schema({
   storeId: {
     type: Schema.ObjectId,
     ref: "Store",
-  },
-});
+  }
+},
+  {
+    timestamps: true,
+    versionKey: false
+  }
+);
 
 module.exports = mongoose.model('Manager', managerSchema);

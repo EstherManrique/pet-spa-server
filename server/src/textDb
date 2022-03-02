@@ -11,3 +11,15 @@ const z = {clientName: "Dianyela Maldonado", petName: "Mora", date: 1650369600, 
 const a = {name: "Eduardo Moreno", userName: "laloMoreno", password: ""}
 
 const b = {name: "Betsabe Ortegón", userName: "BetsabeOrtegon", password: ""}
+
+password
+.isString()
+  .isLength({ min: 8 })
+  .not()
+  .isLowercase()
+  .not()
+  .isUppercase()
+  .not()
+  .isNumeric()
+  .not()
+  .isAlpha();

@@ -22,6 +22,11 @@ const reservationSchema = new Schema({
     type: Schema.ObjectId,
     ref: "Service",
   }
-});
+},
+{
+  timestamps: true,
+  versionKey: false
+}
+);
 
 module.exports = mongoose.model("Reservation", reservationSchema);
