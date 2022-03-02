@@ -3,18 +3,17 @@
 const express = require('express');
 const managerController = require('../controllers/manager');
 const router = express.Router();
-const NewManager = require('../models/manager')
+const { validateSave, validateUpdate, validateDelete } = require('../validators/manager')
 
 router.get('/manager', managerController.list);
 
-router.post('/manager', managerController.save);
+router.post('/manager', validateSave, managerController.save);
 
-router.delete('/manager/:id',managerController.delete);
+router.delete('/manager/:id', validateDelete, managerController.delete);
 
-router.put('/manager/:id',managerController.update);
+router.put('/manager/:id', validateUpdate, managerController.update);
 
 
-// router.put('/manager', managerController.update);
 
 
 

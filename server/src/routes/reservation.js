@@ -3,13 +3,16 @@
 const express = require('express');
 const reservationController = require('../controllers/reservation');
 const router = express.Router();
+const { validateSave, validateUpdate, validateDelete, validateListStore } = require('../validators/reservation')
 
 router.get('/reservations', reservationController.list);
 
-router.post('/reservations', reservationController.save);
+router.get('/reservations/:storeId?', validateListStore, reservationController.list);
 
-router.delete('/reservations/:id', reservationController.delete);
+router.post('/reservations', validateSave, reservationController.save);
 
-router.put('/reservations/:id', reservationController.update);
+router.delete('/reservations/:id', validateDelete, reservationController.delete);
+
+router.put('/reservations/:id', validateUpdate, reservationController.update);
 
 module.exports = router;

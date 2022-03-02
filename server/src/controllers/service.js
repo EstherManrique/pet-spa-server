@@ -20,17 +20,25 @@ const controller = {
     response.send('Service Deleted');
   },
   update: async(request, response) => {
-    const updateServiceId = await request.params.id;
-    console.log('Service Updated',updateServiceId);
-
-    const params = request.body;
-
-    Service.findOneAndUpdate({_id: updateServiceId}, params, {new: true}, () => {
-      return response.status(200).send({
-        status: 'Success, Service Updated',
-        service: params
+    try {
+      const updateServiceId = await request.params.id;
+      console.log('Service Updated',updateServiceId);
+  
+      const params = request.body;
+      Service.findOneAndUpdate({_id: updateServiceId}, params, {new: true}, () => {
+        return response.status(200).send({
+          status: 'Success, Service Updated',
+          service: params
+        });
       });
-    });
+      
+    } catch (error) {
+      return response.status(404).send({
+        status: 'Id Errooooor',
+        message: error.message,
+      });
+    }
+
   }
 };
 
