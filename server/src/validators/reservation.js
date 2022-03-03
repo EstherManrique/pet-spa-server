@@ -27,9 +27,9 @@ const validateSave = [
     .isIn(['pending', 'confirmed', 'canceled'])
     .withMessage('Error reservation status'),
   check("clientEmail")
-    .exists()
-    .not()
-    .isEmpty()
+    .optional({
+      checkFalsy: true
+    })
     .isString()
     .isEmail()
     .withMessage('Must be a valid email'),
