@@ -2,18 +2,48 @@ const { check } = require("express-validator");
 const { validateResult } = require("../helpers/validateHelper");
 
 const validateSave = [
-  check("name").exists().not().isEmpty().isString(),
-  check("address").exists().not().isEmpty().isString(),
-  check("email").exists().not().isEmpty().isString().isEmail(),
-  check("phone").exists().not().isEmpty().isNumeric(),
-  check("location").exists().not().isEmpty().isString(),
+  check("name")
+    .exists()
+    .not()
+    .isEmpty()
+    .isString()
+    .withMessage('Error store name'),
+  check("address")
+    .exists()
+    .not()
+    .isEmpty()
+    .isString()
+    .withMessage('Error store address'),
+  check("email")
+    .exists()
+    .not()
+    .isEmpty()
+    .isString()
+    .isEmail()
+    .withMessage('Must be a valid email'),
+  check("phone")
+    .exists()
+    .not()
+    .isEmpty()
+    .isNumeric()
+    .isLength({min: 10, max: 10})
+    .withMessage('Error strore phone, must be ten digits'),
+  check("location")
+    .exists()
+    .not()
+    .isEmpty()
+    .isString()
+    .isLatLong()
+    .withMessage('Error store location'),
   (request, response, next) => {
     validateResult(request, response, next);
   },
 ];
 
 const validateUpdate = [
-  check("id").isMongoId(),
+  check("id")
+    .isMongoId()
+    .withMessage("Must be a valid MongoID"),
   check("name")
     .optional({
       checkFalsy: false,
@@ -55,7 +85,9 @@ const validateUpdate = [
 ];
 
 const validateDelete = [
-  check("id").isMongoId().withMessage("Must be a valid MongoID"),
+  check("id")
+    .isMongoId()
+    .withMessage("Must be a valid MongoID"),
   (request, response, next) => {
     validateResult(request, response, next);
   },

@@ -21,14 +21,14 @@ const controller = {
     );
     return response.status(200).send({
       Message: "Success Administrator Deleted",
-      administrator: request.params.id,
+      administrator: deleteAdministrator,
     });
   },
   update: async (request, response) => {
-    const updateAdministratorId = request.params.id;
+    const updateAdministratorId = await request.params.id;
     const params = request.body;
-
-   await Administrator.findByIdAndUpdate(updateAdministratorId, params,
+    
+    Administrator.findByIdAndUpdate(updateAdministratorId, params,
       () => {
         return response.status(200).send({
           Message: "Success Administrator Updated",

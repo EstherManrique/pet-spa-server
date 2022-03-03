@@ -17,7 +17,10 @@ const controller = {
   delete: async (request, response) => {
     const deleteService = await Service.findByIdAndDelete(request.params.id);
     console.log('Service Deleted:', deleteService);
-    response.send('Service Deleted');
+    response.send({
+      message: 'Service Deleted',
+      service: deleteService
+    });
   },
   update: async(request, response) => {
     try {

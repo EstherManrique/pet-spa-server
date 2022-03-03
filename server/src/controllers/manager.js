@@ -22,13 +22,13 @@ const controller = {
   },
   delete: async (request, response) => {
     const deleteManager = await Manager.findByIdAndDelete(request.params.id);
-    console.log("Manager Deleted:", deleteManager);
-    response.send("Manager Deleted");
+    response.send({
+      message: "Manager Deleted",
+      manager: deleteManager
+    });
   },
   update: async (request, response) => {
     const updateManagerId = await request.params.id;
-    console.log("Updated Manager", updateManagerId);
-
     const params = request.body;
 
     Manager.findOneAndUpdate(

@@ -6,12 +6,14 @@ const validateSave = [
     .exists()
     .not()
     .isEmpty()
-    .isString(),
+    .isString()
+    .withMessage('Error service name'),
   check("description")
     .exists()
     .not()
     .isEmpty()
-    .isString(),
+    .isString()
+    .withMessage('Error service description'),
   check("price")
     .exists()
     .not()
@@ -26,7 +28,8 @@ const validateSave = [
 
 const validateUpdate = [
   check('id')
-    .isMongoId(),
+    .isMongoId()
+    .withMessage("Must be a valid MongoID"),
   check("name")
     .optional({
       checkFalsy: false
@@ -47,7 +50,8 @@ const validateUpdate = [
     })
     .not()
     .isEmpty()
-    .isCurrency(),
+    .isCurrency()
+    .withMessage('Must be a valid Currency'),
   (request, response, next) => {
     validateResult(request, response, next);
   }  

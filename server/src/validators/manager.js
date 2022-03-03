@@ -6,12 +6,14 @@ const validateSave = [
     .exists()
     .not()
     .isEmpty()
-    .isString(),
+    .isString()
+    .withMessage('Error manger name'),
   check("userName")
     .exists()
     .not()
     .isEmpty()
-    .matches(/^([a-zA-Z\_0-9]{5,})$/, 'g'), 
+    .matches(/^([a-zA-Z\_0-9]{5,})$/, 'g')
+    .withMessage('Error manger userName at least 5 characters'), 
   check("password")
     .exists()
     .not()
@@ -19,7 +21,8 @@ const validateSave = [
     .isStrongPassword()
     .withMessage('Must be a strong passwor'),
   check('storeId')
-    .isMongoId(),
+    .isMongoId()
+    .withMessage("Must be a valid MongoID"),
   (request, response, next) => {
     validateResult(request, response, next);
   }  
@@ -27,7 +30,8 @@ const validateSave = [
 
 const validateUpdate = [
   check('id')
-    .isMongoId(),
+    .isMongoId()
+    .withMessage("Must be a valid MongoID"),
   check("name")
     .optional({
       checkFalsy: false
@@ -42,7 +46,8 @@ const validateUpdate = [
     .not()
     .isEmpty()
     .isString()
-    .matches(/^([a-zA-Z\_0-9]{5,})$/, 'g'),
+    .matches(/^([a-zA-Z\_0-9]{5,})$/, 'g')
+    .withMessage('Error manger userName at least 5 characters'),
   check("password")
     .optional({
       checkFalsy: false
@@ -56,7 +61,8 @@ const validateUpdate = [
     .optional({
       checkFalsy: false
     })
-    .isMongoId(),
+    .isMongoId()
+    .withMessage("Must be a valid MongoID"),
   (request, response, next) => {
     validateResult(request, response, next);
   }  
@@ -70,8 +76,5 @@ const validateDelete = [
     validateResult(request, response, next);
   }  
 ];
-
-
-
 
 module.exports = { validateSave, validateUpdate, validateDelete };
