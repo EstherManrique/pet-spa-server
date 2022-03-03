@@ -6,12 +6,14 @@ const validateSave = [
     .exists()
     .not()
     .isEmpty()
-    .isString(),
+    .isString()
+    .withMessage('Error administrator name'),
   check("userName")
     .exists()
     .not()
     .isEmpty()
-    .matches(/^([a-zA-Z\_0-9]{5,})$/, 'g'), 
+    .matches(/^([a-zA-Z\_0-9]{5,})$/, 'g')
+    .withMessage('Error manger userName at least 5 characters'), 
   check("password")
     .exists()
     .not()
@@ -25,7 +27,8 @@ const validateSave = [
 
 const validateUpdate = [
   check('id')
-    .isMongoId(),
+    .isMongoId()
+    .withMessage("Must be a valid MongoID"),
   check("name")
     .optional({
       checkFalsy: false
@@ -40,7 +43,8 @@ const validateUpdate = [
     .not()
     .isEmpty()
     .isString()
-    .matches(/^([a-zA-Z\_0-9]{5,})$/, 'g'),
+    .matches(/^([a-zA-Z\_0-9]{5,})$/, 'g')
+    .withMessage('Error manger userName at least 5 characters'),
   check("password")
     .optional({
       checkFalsy: false

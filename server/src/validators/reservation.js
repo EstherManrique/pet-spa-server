@@ -6,37 +6,46 @@ const validateSave = [
     .exists()
     .not()
     .isEmpty()
-    .isString(),
+    .isString()
+    .withMessage('Error reservation clientName'),
   check("petName")
     .exists()
     .not()
     .isEmpty()
-    .isString(),
+    .isString()
+    .withMessage('Error reservation petName'),
   check("date")
     .exists()
     .not()
     .isEmpty()
-    .isISO8601(),
+    .isISO8601()
+    .withMessage('Error reservation date, must be aaaa/mm/dd hh:mm'),
   check("status")
     .exists()
     .not()
     .isEmpty()
-    .isIn(['pending', 'confirmed', 'canceled']),
+    .isIn(['pending', 'confirmed', 'canceled'])
+    .withMessage('Error reservation status'),
   check("clientEmail")
     .exists()
     .not()
     .isEmpty()
     .isString()
-    .isEmail(),
+    .isEmail()
+    .withMessage('Must be a valid email'),
   check("clientPhone")
     .exists()
     .not()
     .isEmpty()
-    .isNumeric(),
+    .isNumeric()
+    .isLength({min: 10, max: 10})
+    .withMessage('Error client phone, must be ten digits'),
   check('storeId')
-    .isMongoId(),
+    .isMongoId()
+    .withMessage("Must be a valid storeID"),
   check('serviceId')
-    .isMongoId(),
+    .isMongoId()
+    .withMessage("Must be a valid serviceId"),
   (request, response, next) => {
     validateResult(request, response, next);
   }  
@@ -44,7 +53,8 @@ const validateSave = [
 
 const validateUpdate = [
   check('id')
-    .isMongoId(),
+    .isMongoId()
+    .withMessage("Must be a valid MongoID"),
   check("clientName")
     .optional({
       checkFalsy: false
@@ -65,7 +75,8 @@ const validateUpdate = [
     })
     .not()
     .isEmpty()
-    .isISO8601(),
+    .isISO8601()
+    .withMessage('Error reservation date, must be aaaa/mm/dd hh:mm'),
   check("status")
     .optional({
       checkFalsy: false
@@ -106,7 +117,10 @@ const validateUpdate = [
 const validateDelete = [
   check('id')
     .isMongoId()
-    .withMessage('Must be a valid MongoID'),
+    .withMessage('Must be a valid MongoID')
+    .not()
+    .exists()
+    .withMessage('Resservation Id does not exist'),
   (request, response, next) => {
     validateResult(request, response, next);
   }

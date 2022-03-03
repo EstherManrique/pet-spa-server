@@ -35,8 +35,10 @@ const controller = {
   delete: async (request, response) => {
   try {
     const deleteStore = await Store.findByIdAndDelete(request.params.id);
-    console.log("Store Deleted:", deleteStore);
-    response.send("Store Deleted");
+    response.send({
+      message: "Store Deleted",
+      store: deleteStore
+    });
     
   } catch (error) {
     return response.status(404).send({
@@ -48,7 +50,6 @@ const controller = {
   update: async (request, response) => {
     // Obtener el id de la tienda por la url
     const updateStoreId = await request.params.id;
-    console.log("Updated Store", updateStoreId);
     // Obtener los datos que llegan por PUT
     const params = request.body;
     // Validar datos

@@ -50,19 +50,16 @@ const controller = {
     const deleteReservation = await Reservation.findByIdAndDelete(
       request.params.id
     );
-    console.log("Reservation Deleted:", deleteReservation);
-    return response.status(200).send({
+    response.status(200).send({
       message: "Success Reservation Deleted",
-      reservation: request.params.id,
+      reservation: deleteReservation,
     });
   },
   update: async (request, response) => {
     const updateReservation = await request.params.id;
-    console.log("Updated Reservation", updateReservation);
-
     const params = request.body;
 
-    Reservation.findOneAndUpdate(
+    Reservation.findByIdAndUpdate(
       { _id: updateReservation },
       params,
       { new: true },
