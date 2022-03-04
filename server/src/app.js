@@ -1,11 +1,11 @@
 'use strict'
-/* if(process.env.NODE_ENV !== 'production') {
+if(process.env.NODE_ENV !== 'production') {
   // Manage enenvironmental variables
   require('dotenv').config();
-}; */
+};
 
 // Manage enenvironmental variables
-require('dotenv').config();
+// require('dotenv').config();
 
 // Getting modules to create server
 const express = require('express');

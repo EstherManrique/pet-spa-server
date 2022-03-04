@@ -3,46 +3,68 @@ const Service = require('../models/service');
 
 const controller = {
   list: async (request, response) => {
-    const services = await Service.find({}).exec();
-    return response.status(200).send(services);
-  },
-  save: async (request, response) => {
-    const {name, description, price} = request.body;
-    console.log(request.body);
-
-    const newService = Service({name, description, price});
-    await newService.save();
-    response.json({message: 'Service saved'});
-  },
-  delete: async (request, response) => {
-    const deleteService = await Service.findByIdAndDelete(request.params.id);
-    console.log('Service Deleted:', deleteService);
-    response.send({
-      message: 'Service Deleted',
-      service: deleteService
-    });
-  },
-  update: async(request, response) => {
     try {
-      const updateServiceId = await request.params.id;
-      console.log('Service Updated',updateServiceId);
-  
-      const params = request.body;
-      Service.findOneAndUpdate({_id: updateServiceId}, params, {new: true}, () => {
-        return response.status(200).send({
-          status: 'Success, Service Updated',
-          service: params
-        });
-      });
-      
+      const services = await Service.find({});
+      return response.status(200).send(services);
     } catch (error) {
-      return response.status(404).send({
-        status: 'Id Errooooor',
+      return response.status(400).send({
         message: error.message,
       });
     }
+  },
 
-  }
+  save: async (request, response) => {
+    try {
+      const params = request.body;
+      const newService = Service({
+        name: params.name,
+        description: params.description,
+        price: params.price
+      });
+      await newService.save();
+      return response.status(200).send({
+        message: 'Success Service saved',
+        service: params
+      });
+    } catch (error) {
+      return response.status(400).send({
+        message: error.message
+      });
+    }
+  },
+
+  update: async(request, response) => {
+    try {
+      const updateServiceId = request.params.id;
+      const params = request.body;
+
+      await Service.findByIdAndUpdate(updateServiceId, params)
+        return response.status(201).send({
+          message: 'Success Service Updated',
+          service: params
+        });
+    } catch (error) {
+      return response.status(400).send({
+        status: 'Id Error',
+        message: error.message
+      });
+    }
+  },
+
+  delete: async (request, response) => {
+    try {
+      const deleteService = await Service.findByIdAndDelete(request.params.id);
+      return response.send({
+        message: 'Success Service Deleted',
+        service: deleteService
+      });
+    } catch (error) {
+      return response.status(400).send({
+        status: "Id Error",
+        message: error.message
+      });
+    }
+  },
 };
 
 
