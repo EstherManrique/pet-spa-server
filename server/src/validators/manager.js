@@ -12,7 +12,7 @@ const validateSave = [
     .exists()
     .not()
     .isEmpty()
-    .matches(/^([a-zA-Z\_0-9]{5,})$/, 'g')
+    .matches(/^([a-zñA-ZÑ\_0-9]{5,})$/, 'g')
     .withMessage('Error manger userName at least 5 characters'), 
   check("password")
     .exists()
@@ -46,7 +46,7 @@ const validateUpdate = [
     .not()
     .isEmpty()
     .isString()
-    .matches(/^([a-zA-Z\_0-9]{5,})$/, 'g')
+    .matches(/^([a-zñA-ZÑ\_0-9]{5,})$/, 'g')
     .withMessage('Error manger userName at least 5 characters'),
   check("password")
     .optional({

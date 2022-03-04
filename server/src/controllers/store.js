@@ -4,11 +4,11 @@ const Store = require("../models/store");
 const controller = {
   list: async (request, response) => {
     try {
-      const stores = await Store.find({}).exec();
+      const stores = await Store.find({});
       return response.status(200).send(stores);
     } catch (error) {
-      return response.status(404).send({
-        message: error.message,
+      return response.status(400).send({
+        message: error.message
       });
     }
   },
@@ -21,52 +21,53 @@ const controller = {
         address: params.address,
         email: params.email,
         phone: params.phone,
-        location: params.location,
+        location: params.location
       });
       await newStore.save();
-      response.json({ message: "Store saved" });
+      return response.status(200).send({
+        message: "Success Store saved",
+        store: params
+      });
     } catch (error) {
-      return response.status(422).send({
-        message: error.message,
+      return response.status(400).send({
+        message: error.message
+      });
+    }
+  },
+
+  update: async (request, response) => {
+    try {
+      const updateStoreId = request.params.id;
+      const params = request.body;
+      const options = {new: true};
+
+      await Store.findByIdAndUpdate(updateStoreId, params, options);
+        return response.status(201).send({
+          message: "Success Store Updated",
+          store: params
+        });
+    } catch (error) {
+      return response.status(400).send({
+        status: "Id Error",
+        message: error.message
       });
     }
   },
 
   delete: async (request, response) => {
-  try {
-    const deleteStore = await Store.findByIdAndDelete(request.params.id);
-    response.send({
-      message: "Store Deleted",
-      store: deleteStore
-    });
-    
-  } catch (error) {
-    return response.status(404).send({
-      status: 'Id Error',
-      message: error.message,
-    });
+    try {
+      const deleteStore = await Store.findByIdAndDelete(request.params.id);
+      return response.send({
+        message: "Success Store Deleted",
+        store: deleteStore
+      });
+    } catch (error) {
+      return response.status(400).send({
+        status: "Id Error",
+        message: error.message
+      });
+    }
   }
-  },
-  update: async (request, response) => {
-    // Obtener el id de la tienda por la url
-    const updateStoreId = await request.params.id;
-    // Obtener los datos que llegan por PUT
-    const params = request.body;
-    // Validar datos
-    // Find and Update
-
-    Store.findOneAndUpdate(
-      { _id: updateStoreId },
-      params,
-      { new: true },
-      () => {
-        return response.status(201).send({
-          status: "Success Store Updated",
-          store: params,
-        });
-      }
-    );
-  },
 };
 
 module.exports = controller;

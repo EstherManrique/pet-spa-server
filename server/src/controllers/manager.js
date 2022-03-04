@@ -1,48 +1,76 @@
 "use strict";
-// const validator = require('validator');
 const Manager = require("../models/manager");
 
 const controller = {
   list: async (request, response) => {
-    const managers = await Manager.find({})
-      .populate({
-        path: "storeId",
-        model: "Store",
-      })
-      .exec();
-    return response.status(200).send(managers);
-  },
-  save: async (request, response) => {
-    const { name, userName, password, storeId } = request.body;
-    console.log(request.body);
-
-    const newManager = Manager({ name, userName, password, storeId });
-    await newManager.save();
-    response.json({ message: "Manager saved" });
-  },
-  delete: async (request, response) => {
-    const deleteManager = await Manager.findByIdAndDelete(request.params.id);
-    response.send({
-      message: "Manager Deleted",
-      manager: deleteManager
-    });
-  },
-  update: async (request, response) => {
-    const updateManagerId = await request.params.id;
-    const params = request.body;
-
-    Manager.findOneAndUpdate(
-      { _id: updateManagerId },
-      params,
-      { new: true },
-      () => {
-        return response.status(200).send({
-          status: "Success Manager Updated",
-          manager: params,
+    try {
+      const managers = await Manager.find({})
+        .populate({
+          path: "storeId",
+          model: "Store",
         });
-      }
-    );
+      return response.status(200).send(managers);
+    } catch (error) {
+      return response.status(400).send({
+        message: error.message
+      });
+    }
   },
+
+  save: async (request, response) => {
+    try {
+      const params = request.body;
+      const newManager = Manager({
+        name: params.name,
+        userName: params.userName,
+        password: params.password,
+        storeId: params.storeId
+       });
+      await newManager.save();
+      return response.status(200).send({
+        message: "Success Manager saved",
+        manager: params
+       });
+    } catch (error) {
+      return response.status(400).send({
+        message: error.message
+      });
+    }
+  },
+
+  update: async (request, response) => {
+    try {
+      const updateManagerId = request.params.id;
+      const params = request.body;
+      const options = {new: true};
+  
+      await Manager.findByIdAndUpdate(updateManagerId, params, options) 
+        return response.status(201).send({
+          message: "Success Manager Updated",
+          manager: params
+        });
+    } catch (error) {
+      return response.status(400).send({
+        status: "Id Error",
+        message: error.message
+      });
+    }
+  },
+
+  delete: async (request, response) => {
+    try {
+      const deleteManager = await Manager.findByIdAndDelete(request.params.id);
+      response.send({
+        message: "Manager Deleted",
+        manager: deleteManager
+      });
+    } catch (error) {
+      return response.status(400).send({
+        status: "Id Error",
+        message: error.message
+      });
+    }
+  }
 };
 
 module.exports = controller;

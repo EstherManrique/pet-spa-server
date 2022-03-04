@@ -86,10 +86,8 @@ const validateUpdate = [
     .isIn(['pending', 'confirmed', 'canceled']),
   check("clientEmail")
     .optional({
-      checkFalsy: false
+      checkFalsy: true
     })
-    .not()
-    .isEmpty()
     .isString()
     .isEmail(),
   check("clientPhone")
@@ -98,7 +96,9 @@ const validateUpdate = [
     })
     .not()
     .isEmpty()
-    .isNumeric(),
+    .isNumeric()
+    .isLength({min: 10, max: 10})
+    .withMessage('Error client phone, must be ten digits'),
   check('storeId')
     .optional({
       checkFalsy: false
@@ -117,10 +117,7 @@ const validateUpdate = [
 const validateDelete = [
   check('id')
     .isMongoId()
-    .withMessage('Must be a valid MongoID')
-    .not()
-    .exists()
-    .withMessage('Resservation Id does not exist'),
+    .withMessage('Must be a valid MongoID'),
   (request, response, next) => {
     validateResult(request, response, next);
   }

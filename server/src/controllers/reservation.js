@@ -1,76 +1,88 @@
 "use strict";
-const validator = require("validator");
-
-// const mongoose = require("mongoose");
 const Reservation = require("../models/reservation");
 
 const controller = {
   list: async (request, response) => {
-    const query =
-      typeof request.params.storeId !== "undefined"
-        ? { storeId: request.params.storeId }
-        : {};
-    const reservations = await Reservation.find(query)
-      .populate({
-        path: "storeId",
-        model: "Store",
-      })
-      .populate({
-        path: "serviceId",
-        model: "Service",
-      })
-      .exec();
-    return response.status(200).send(reservations);
+    try {
+      const query = typeof request.params.storeId !== "undefined"
+          ? { storeId: request.params.storeId }
+          : {};
+      const reservations = await Reservation.find(query)
+        .populate({
+          path: "storeId",
+          model: "Store",
+        })
+        .populate({
+          path: "serviceId",
+          model: "Service",
+        });
+      return response.status(200).send(reservations);
+    } catch (error) {
+      return response.status(400).send({
+        message: error.message
+      });
+    }
   },
+
   save: async (request, response) => {
-    // Recoger parametros del POST
-    const params = request.body;
+    try {
+      const params = request.body;  
+      const newReservation = Reservation({
+        clientName: params.clientName,
+        petName: params.petName,
+        date: params.date,
+        status: params.status,
+        clientEmail: params.clientEmail,
+        clientPhone: params.clientPhone,
+        storeId: params.storeId,
+        serviceId: params.serviceId
+      });
+      await newReservation.save();
+      return response.status(200).send({
+        message: 'Success Reservation saved',
+        reservation: newReservation
+      });
+      
+    } catch (error) {
+      return response.status(400).send({
+        message: error.message
+      });
+    }
+  },
 
-    // Crear el objeto a guardar
-    const newReservation = Reservation({
-      clientName: params.clientName,
-      petName: params.petName,
-      date: params.date,
-      status: params.status,
-      clientEmail: params.clientEmail,
-      clientPhone: params.clientPhone,
-      storeId: params.storeId,
-      serviceId: params.serviceId,
-    });
-    // Asignar valores
-    // Guardar la reservation
-    await newReservation.save();
-    // Devolver respuesta
-    return response.status(200).send({
-      message: 'Reservation saved!',
-      data: newReservation
-    });
-  },
-  delete: async (request, response) => {
-    const deleteReservation = await Reservation.findByIdAndDelete(
-      request.params.id
-    );
-    response.status(200).send({
-      message: "Success Reservation Deleted",
-      reservation: deleteReservation,
-    });
-  },
   update: async (request, response) => {
-    const updateReservation = await request.params.id;
-    const params = request.body;
-
-    Reservation.findByIdAndUpdate(
-      { _id: updateReservation },
-      params,
-      { new: true },
-      () => {
+    try {
+      const updateReservation = request.params.id;
+      const params = request.body;
+      const options = {new: true};
+  
+      await Reservation.findByIdAndUpdate(updateReservation, params, options)
         return response.status(200).send({
-          message: "Success, Reservation Updated",
+          message: "Success Reservation Updated",
           reservation: params,
         });
-      }
-    );
+    } catch (error) {
+      return response.status(400).send({
+        status: "Id Error",
+        message: error.message
+      });
+    }
   },
+
+  delete: async (request, response) => {
+    try {
+      const deleteReservation = await Reservation.findByIdAndDelete(request.params.id);
+      return response.status(200).send({
+        message: "Success Reservation Deleted",
+        reservation: deleteReservation,
+      });
+    } catch (error) {
+      return response.status(400).send({
+        status: "Id Error",
+        message: error.message
+      });
+    }
+  }
 };
 
 module.exports = controller;

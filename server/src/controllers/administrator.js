@@ -3,39 +3,68 @@ const Administrator = require("../models/administrator");
 
 const controller = {
   list: async (request, response) => {
-    const administrators = await Administrator.find({}).exec();
-    return response.status(200).send(administrators);
+    try {
+      const administrators = await Administrator.find({});
+      return response.status(200).send(administrators);
+    } catch (error) {
+      return response.status(400).send({
+        message: error.message
+      });
+    }
   },
+
   save: async (request, response) => {
-    const { name, userName, password } = request.body;
-    const newAdminstrator = Administrator({ name, userName, password });
-    await newAdminstrator.save();
-    return response.status(200).send({
-      Message: "Success Administrator Saved",
-      administrator: request.params.id,
-    });
+    try {
+      const params = request.body;
+      const newAdminstrator = Administrator({
+        name: params.name,
+        userName: params.userName,
+        password: params.password
+      });
+      await newAdminstrator.save();
+      return response.status(200).send({
+        message: "Success Administrator Saved",
+        administrator: params
+      });
+    } catch (error) {
+      return response.status(400).send({
+        message: error.message
+      });
+    }
   },
-  delete: async (request, response) => {
-    const deleteAdministrator = await Administrator.findByIdAndDelete(
-      request.params.id
-    );
-    return response.status(200).send({
-      Message: "Success Administrator Deleted",
-      administrator: deleteAdministrator,
-    });
-  },
+
   update: async (request, response) => {
-    const updateAdministratorId = await request.params.id;
-    const params = request.body;
-    
-    Administrator.findByIdAndUpdate(updateAdministratorId, params,
-      () => {
-        return response.status(200).send({
-          Message: "Success Administrator Updated",
-          administrator: params,
+    try {
+      const updateAdministratorId = request.params.id;
+      const params = request.body;
+      const options = {new: true};
+
+      await Administrator.findByIdAndUpdate(updateAdministratorId, params, options)
+        return response.status(201).send({
+          message: "Success Administrator Updated",
+          administrator: params
         });
-      }
-    );
+    } catch (error) {
+      return response.status(400).send({
+        status: "Id Error",
+        message: error.message
+      });
+    }
+  },
+  
+  delete: async (request, response) => {
+    try {
+      const deleteAdministrator = await Administrator.findByIdAndDelete(request.params.id);
+      return response.status(200).send({
+        message: "Success Administrator Deleted",
+        administrator: deleteAdministrator
+      });
+    } catch (error) {
+      return response.status(400).send({
+        status: "Id Error",
+        message: error.message
+      });
+    }
   },
 };
 
