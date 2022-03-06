@@ -1,180 +1,140 @@
 "use strict";
 const User = require("../models/user");
+const Role = require('../models/role');
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
+const helpers = require("../helpers/validateHelper");
+const accessControl = require('../helpers/accessControl');
 
 const controller = {
   list: async (request, response) => {
-    try {
-      const user = await User.find({})
+    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.users.get);
+    if (helpers.compareRoles(allowedRoles, request.userRoles)) {
+      try {
+        const users = await User.find({})
+        .populate({
+          path: "roles",
+          model: "Role"
+        })
         .populate({
           path: "storeId",
           model: "Store",
         });
-      return response.status(200).send(user);
-    } catch (error) {
-      return response.status(400).send({
-        message: error.message
-      });
-    }
-  },
-
-  login: async (request, response) => {
-    const params = request.body;
-    try {
-      let userExists = await User.findOne({
-        userName: params.userName
-      });
-      if(!userExists) {
+        return response.status(200).send(users);
+      } catch (error) {
         return response.status(400).send({
-          message: 'User does not exists'
+          message: error.message
         });
       }
-      const passMatch = await bcrypt.compare(params.password, userExists.password);
-      if(!passMatch) {
-        return response.status(400).send({
-          message: 'Password incorrect'
-        });
-      }
-      const payload = {
-        user: {
-          id: userExists.id
-        }
-      };
-      jwt.sign(
-        payload,
-        process.env.TOKEN_SECRET, {
-          expiresIn: "1h"
-        },
-        (err, token) => {
-          if(err) {
-            throw err;
-          }
-          return response.status(200).send({
-            token
-          })
-        }
-      )
-    } catch (error) {
-      
-    }
-
-  },
-
-  register: async (request, response) => {
-    const params = request.body;
-    try {
-      let userExists = await User.findOne({
-        userName: params.userName
-      });
-      if(userExists) {
-        return response.status(400).send({
-          message: 'User already exists'
-        });
-      }
-      const newUser = User({
-        name: params.name,
-        userName: params.userName,
-        password: params.password,
-        role: params.role,
-        storeId: params.storeId
-      });
-      const salt = await bcrypt.genSalt(10);
-      newUser.password = await bcrypt.hash(params.password, salt);
-
-      await newUser.save();
-
-      const payload = {
-        user: {
-          id: newUser.id
-        }
-      };
-
-      jwt.sign(
-        payload,
-        process.env.TOKEN_SECRET, {
-          expiresIn: 60000
-        },
-        (err, token) => {
-          if(err) {
-            throw err;
-          }
-          return response.status(200).send({
-            token
-          })
-        }
-      )
-    } catch (error) {
-      return response.status(400).send({
-        message: error.message
+    } else {
+      return response.status(403).send({
+        message: "Forbidden",
       });
     }
   },
 
   save: async (request, response) => {
-    const params = request.body;
-    try {
-      let userExists = await User.findOne({
-        userName: params.userName
-      });
-      if(userExists) {
-        return response.status(400).send({
-          message: 'User already exists'
+    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.users.post);
+    if (helpers.compareRoles(allowedRoles, request.userRoles)) {
+      const { name, userName, password, email, storeId, roles } = request.body;
+      try {
+        // Validate if user exists
+        let userExists = await User.findOne({
+          userName: userName
         });
-      }
-      const newUser = User({
-        name: params.name,
-        userName: params.userName,
-        password: params.password,
-        role: params.role,
-        storeId: params.storeId
-      });
-      const salt = await bcrypt.genSalt(10);
-      newUser.password = await bcrypt.hash(params.password, salt);
-
-      await newUser.save();
-
-      return response.status(200).send({
-        message: "Success User saved",
-        User: params
-       });
-    } catch (error) {
-      return response.status(400).send({
-        message: error.message
+        if(userExists) {
+          return response.status(400).send({
+            message: 'User already exists'
+          });
+        }
+  
+        // Create new user object
+        const newUser = User({
+          name,
+          userName,
+          password,
+          email,
+          storeId
+        });
+  
+        // Validate if user has roles
+        if(roles) {
+          // Get roles from mongo
+          const foundRoles = await Role.find({ name: { $in: roles }});
+          // Get roles ID's
+          newUser.roles = foundRoles.map(role => role._id);
+        } else {
+          // Asign default role
+          const role = await Role.findOne({ name: 'Client' });
+          newUser.roles = [role._id];
+        }
+  
+        // Password encrypt
+        const salt = await bcrypt.genSalt(10);
+        newUser.password = await bcrypt.hash(password, salt);
+  
+        // User save
+        await newUser.save();
+  
+        return response.status(200).send({
+          message: "Success User saved",
+          User: request.body
+         });
+      } catch (error) {
+        return response.status(400).send({
+          message: error.message
+        });
+      } 
+    } else {
+      return response.status(403).send({
+        message: "Forbidden",
       });
     }
   },
 
   update: async (request, response) => {
-    try {
-      const updateUserId = request.params.id;
-      const params = request.body;
-      const options = {new: true};
-  
-      await User.findByIdAndUpdate(updateUserId, params, options) 
-        return response.status(201).send({
-          message: "Success User Updated",
-          User: params
+    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.users.put);
+    if (helpers.compareRoles(allowedRoles, request.userRoles)) {
+      try {
+        const updateUserId = request.params.id;
+        const params = request.body;
+        const options = {new: true};
+    
+        await User.findByIdAndUpdate(updateUserId, params, options) 
+          return response.status(201).send({
+            message: "Success User Updated",
+            User: params
+          });
+      } catch (error) {
+        return response.status(400).send({
+          status: "Id Error",
+          message: error.message
         });
-    } catch (error) {
-      return response.status(400).send({
-        status: "Id Error",
-        message: error.message
+      }
+    } else {
+      return response.status(403).send({
+        message: "Forbidden",
       });
     }
   },
 
   delete: async (request, response) => {
-    try {
-      const deleteUser = await User.findByIdAndDelete(request.params.id);
-      response.send({
-        message: "User Deleted",
-        User: deleteUser
-      });
-    } catch (error) {
-      return response.status(400).send({
-        status: "Id Error",
-        message: error.message
+    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.users.delete);
+    if (helpers.compareRoles(allowedRoles, request.userRoles)) {
+      try {
+        const deleteUser = await User.findByIdAndDelete(request.params.id);
+        response.send({
+          message: "User Deleted",
+          User: deleteUser
+        });
+      } catch (error) {
+        return response.status(400).send({
+          status: "Id Error",
+          message: error.message
+        });
+      }
+    } else {
+      return response.status(403).send({
+        message: "Forbidden",
       });
     }
   }
