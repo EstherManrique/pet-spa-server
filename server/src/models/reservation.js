@@ -3,12 +3,9 @@ const Schema = mongoose.Schema;
 
 const Store = require('./store');
 const Service = require('./service');
+const User = require('./user')
 
 const reservationSchema = new Schema({
-  clientName: {
-    type: String,
-    required: true
-  },
   petName: {
     type: String,
     required: true
@@ -21,14 +18,14 @@ const reservationSchema = new Schema({
     type: String,
     required: true
   },
-  clientEmail: {
-    type: String,
-    required: false
-  },
   clientPhone: {
     type: Number,
     required: true
   },
+  clientId: {
+    type: Schema.ObjectId,
+    ref: "User",
+  }, 
   storeId: {
     type: Schema.ObjectId,
     ref: "Store",

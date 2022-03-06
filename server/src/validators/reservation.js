@@ -2,12 +2,6 @@ const { check } = require("express-validator");
 const { validateResult } = require("../helpers/validateHelper");
 
 const validateSave = [
-  check("clientName")
-    .exists()
-    .not()
-    .isEmpty()
-    .isString()
-    .withMessage('Error reservation clientName'),
   check("petName")
     .exists()
     .not()
@@ -26,13 +20,6 @@ const validateSave = [
     .isEmpty()
     .isIn(['pending', 'confirmed', 'canceled'])
     .withMessage('Error reservation status'),
-  check("clientEmail")
-    .optional({
-      checkFalsy: true
-    })
-    .isString()
-    .isEmail()
-    .withMessage('Must be a valid email'),
   check("clientPhone")
     .exists()
     .not()
@@ -40,6 +27,9 @@ const validateSave = [
     .isNumeric()
     .isLength({min: 10, max: 10})
     .withMessage('Error client phone, must be ten digits'),
+  check('clientId')
+    .isMongoId()
+    .withMessage("Must be a valid clientID"),
   check('storeId')
     .isMongoId()
     .withMessage("Must be a valid storeID"),
@@ -55,13 +45,6 @@ const validateUpdate = [
   check('id')
     .isMongoId()
     .withMessage("Must be a valid MongoID"),
-  check("clientName")
-    .optional({
-      checkFalsy: false
-    })
-    .not()
-    .isEmpty()
-    .isString(),
   check("petName")
     .optional({
       checkFalsy: false
@@ -84,12 +67,6 @@ const validateUpdate = [
     .not()
     .isEmpty()
     .isIn(['pending', 'confirmed', 'canceled']),
-  check("clientEmail")
-    .optional({
-      checkFalsy: true
-    })
-    .isString()
-    .isEmail(),
   check("clientPhone")
     .optional({
       checkFalsy: false
@@ -99,6 +76,11 @@ const validateUpdate = [
     .isNumeric()
     .isLength({min: 10, max: 10})
     .withMessage('Error client phone, must be ten digits'),
+  check('clientId')
+    .optional({
+      checkFalsy: false
+    })
+    .isMongoId(),
   check('storeId')
     .optional({
       checkFalsy: false

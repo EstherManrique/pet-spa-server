@@ -1,34 +1,39 @@
 "use strict";
-const Service = require("../models/service");
+const Role = require("../models/role");
 const helpers = require("../helpers/validateHelper");
 const accessControl = require('../helpers/accessControl');
 
 const controller = {
   list: async (request, response) => {
-    try {
-      const services = await Service.find({});
-      return response.status(200).send(services);
-    } catch (error) {
-      return response.status(400).send({
-        message: error.message,
+    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.role.get);
+    if (helpers.compareRoles(allowedRoles, request.userRoles)) {
+      try {
+        const roles = await Role.find({});
+        return response.status(200).send(roles);
+      } catch (error) {
+        return response.status(400).send({
+          message: error.message,
+        });
+      }
+    } else {
+      return response.status(403).send({
+        message: "Forbidden",
       });
     }
   },
 
   save: async (request, response) => {
-    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.services.post);
+    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.role.put);
     if (helpers.compareRoles(allowedRoles, request.userRoles)) {
       try {
         const params = request.body;
-        const newService = Service({
+        const newRole = new Role({
           name: params.name,
-          description: params.description,
-          price: params.price,
         });
-        await newService.save();
+        await newRole.save();
         return response.status(200).send({
-          message: "Success Service saved",
-          service: params,
+          message: "Success Role saved",
+          role: params,
         });
       } catch (error) {
         return response.status(400).send({
@@ -43,16 +48,16 @@ const controller = {
   },
 
   update: async (request, response) => {
-    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.services.put);
+    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.role.update);
     if (helpers.compareRoles(allowedRoles, request.userRoles)) {
       try {
-        const updateServiceId = request.params.id;
+        const updateRoleId = request.params.id;
         const params = request.body;
 
-        await Service.findByIdAndUpdate(updateServiceId, params);
+        await Role.findByIdAndUpdate(updateRoleId, params);
         return response.status(201).send({
-          message: "Success Service Updated",
-          service: params,
+          message: "Success Role Updated",
+          role: params,
         });
       } catch (error) {
         return response.status(400).send({
@@ -68,13 +73,13 @@ const controller = {
   },
 
   delete: async (request, response) => {
-    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.services.delete);
+    const allowedRoles = await helpers.getMongoRoles(["Administrator"]);
     if (helpers.compareRoles(allowedRoles, request.userRoles)) {
       try {
-        const deleteService = await Service.findByIdAndDelete(request.params.id);
+        const deleteRole = await Role.findByIdAndDelete(request.params.id);
         return response.send({
-          message: "Success Service Deleted",
-          service: deleteService,
+          message: "Success Role Deleted",
+          service: deleteRole,
         });
       } catch (error) {
         return response.status(400).send({

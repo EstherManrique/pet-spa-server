@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const Store = require("./store");
+const Role = require('./role');
 
 const userSchema = new Schema(
   {
@@ -11,16 +12,22 @@ const userSchema = new Schema(
     },
     userName: {
       type: String,
+      unique: true,
+      required: true
+    },
+    email: {
+      type: String,
+      unique: true,
       required: true
     },
     password: {
       type: String,
       required: true
     },
-    role: {
-      type: String,
-      required: true
-    },
+    roles: [{
+      type: Schema.ObjectId,
+      ref: 'Role'
+    }],
     storeId: {
       type: Schema.ObjectId,
       ref: "Store",
