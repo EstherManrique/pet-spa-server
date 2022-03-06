@@ -10,7 +10,7 @@ const controller = {
     const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.users.get);
     if (helpers.compareRoles(allowedRoles, request.userRoles)) {
       try {
-        const users = await User.find({})
+        const users = await User.find({}, { password: 0 })
         .populate({
           path: "roles",
           model: "Role"
@@ -77,7 +77,7 @@ const controller = {
   
         return response.status(200).send({
           message: "Success User saved",
-          User: request.body
+          user: newUser._id
          });
       } catch (error) {
         return response.status(400).send({
@@ -98,11 +98,17 @@ const controller = {
         const updateUserId = request.params.id;
         const params = request.body;
         const options = {new: true};
+
+        // New Password encrypt
+        if(params.password) {
+          const salt = await bcrypt.genSalt(10);
+          params.password = await bcrypt.hash(params.password, salt);
+        }
     
         await User.findByIdAndUpdate(updateUserId, params, options) 
           return response.status(201).send({
             message: "Success User Updated",
-            User: params
+            user: updateUserId
           });
       } catch (error) {
         return response.status(400).send({
