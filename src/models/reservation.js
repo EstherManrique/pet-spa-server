@@ -3,15 +3,29 @@ const Schema = mongoose.Schema;
 
 const Store = require('./store');
 const Service = require('./service');
+const User = require('./user')
 
 const reservationSchema = new Schema({
-  clientName: String,
-  petName: String,
+  petName: {
+    type: String,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now
   },
-  status: String,
+  status: {
+    type: String,
+    required: true
+  },
+  clientPhone: {
+    type: Number,
+    required: true
+  },
+  clientId: {
+    type: Schema.ObjectId,
+    ref: "User",
+  }, 
   storeId: {
     type: Schema.ObjectId,
     ref: "Store",
@@ -20,6 +34,11 @@ const reservationSchema = new Schema({
     type: Schema.ObjectId,
     ref: "Service",
   }
-});
+},
+{
+  timestamps: true,
+  versionKey: false
+}
+);
 
 module.exports = mongoose.model("Reservation", reservationSchema);
