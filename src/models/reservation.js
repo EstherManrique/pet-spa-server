@@ -16,7 +16,8 @@ const reservationSchema = new Schema({
   },
   status: {
     type: String,
-    required: true
+    required: true,
+    default: 'pending'
   },
   clientPhone: {
     type: Number,

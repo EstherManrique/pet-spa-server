@@ -41,15 +41,16 @@ const controller = {
     try {
       const params = request.body;  
       const newReservation = Reservation({
-        clientName: params.clientName,
         petName: params.petName,
         date: params.date,
-        status: params.status,
-        clientEmail: params.clientEmail,
         clientPhone: params.clientPhone,
+        clientId: params.clientId,
         storeId: params.storeId,
         serviceId: params.serviceId
       });
+
+      newReservation.status = params.status ? params.status : 'pending';
+
       await newReservation.save();
       return response.status(200).json({
         message: 'Success Reservation saved',
