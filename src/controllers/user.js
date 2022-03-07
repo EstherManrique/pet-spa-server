@@ -19,14 +19,14 @@ const controller = {
           path: "storeId",
           model: "Store",
         });
-        return response.status(200).send(users);
+        return response.status(200).json(users);
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           message: error.message
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden",
       });
     }
@@ -42,7 +42,7 @@ const controller = {
           userName: userName
         });
         if(userExists) {
-          return response.status(400).send({
+          return response.status(400).json({
             message: 'User already exists'
           });
         }
@@ -75,17 +75,17 @@ const controller = {
         // User save
         await newUser.save();
   
-        return response.status(200).send({
+        return response.status(200).json({
           message: "Success User saved",
           user: newUser._id
          });
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           message: error.message
         });
       } 
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden",
       });
     }
@@ -106,18 +106,18 @@ const controller = {
         }
     
         await User.findByIdAndUpdate(updateUserId, params, options) 
-          return response.status(201).send({
+          return response.status(201).json({
             message: "Success User Updated",
             user: updateUserId
           });
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           status: "Id Error",
           message: error.message
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden",
       });
     }
@@ -128,18 +128,18 @@ const controller = {
     if (helpers.compareRoles(allowedRoles, request.userRoles)) {
       try {
         const deleteUser = await User.findByIdAndDelete(request.params.id);
-        response.send({
+        response.json({
           message: "User Deleted",
           User: deleteUser
         });
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           status: "Id Error",
           message: error.message
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden",
       });
     }

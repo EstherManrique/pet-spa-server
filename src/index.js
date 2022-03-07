@@ -2,7 +2,6 @@
 // Conect to DB
 const mongoose = require("mongoose");
 const app = require('./app');
-// const port = 3001;
 
 // mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;

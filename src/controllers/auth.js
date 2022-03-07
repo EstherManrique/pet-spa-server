@@ -13,13 +13,13 @@ const controller = {
         email: params.email
       });
       if(!userExists) {
-        return response.status(400).send({
+        return response.status(400).json({
           message: 'User does not exists'
         });
       }
       const passMatch = await bcrypt.compare(params.password, userExists.password);
       if(!passMatch) {
-        return response.status(401).send({
+        return response.status(401).json({
           message: 'Password incorrect'
         });
       }
@@ -38,7 +38,7 @@ const controller = {
           if(err) {
             throw err;
           }
-          return response.status(200).send({
+          return response.status(200).json({
             token
           })
         }
@@ -58,7 +58,7 @@ const controller = {
         userName: userName
       });
       if(userExists) {
-        return response.status(400).send({
+        return response.status(400).json({
           message: 'User already exists'
         });
       }
@@ -107,13 +107,13 @@ const controller = {
           if(err) {
             throw err;
           }
-          return response.status(200).send({
+          return response.status(200).json({
             token
           })
         }
       )
     } catch (error) {
-      return response.status(400).send({
+      return response.status(400).json({
         message: error.message
       });
     }
