@@ -33,6 +33,14 @@ app.use(auth.authToken.unless({
       url: '/api/auth/register',
       methods: ['POST']
     },
+    {
+      url: '/api/stores',
+      methods: ['GET']
+    },
+    {
+      url: '/api/services',
+      methods: ['GET']
+    },
   ]
 }))
 
