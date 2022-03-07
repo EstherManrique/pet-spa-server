@@ -7,9 +7,9 @@ const controller = {
   list: async (request, response) => {
     try {
       const stores = await Store.find({});
-      return response.status(200).send(stores);
+      return response.status(200).json(stores);
     } catch (error) {
-      return response.status(400).send({
+      return response.status(400).json({
         message: error.message,
       });
     }
@@ -28,17 +28,17 @@ const controller = {
           location: params.location,
         });
         await newStore.save();
-        return response.status(200).send({
+        return response.status(200).json({
           message: "Success Store saved",
           store: params,
         });
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           message: error.message,
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden",
       });
     }
@@ -53,18 +53,18 @@ const controller = {
         const options = { new: true };
 
         await Store.findByIdAndUpdate(updateStoreId, params, options);
-        return response.status(201).send({
+        return response.status(201).json({
           message: "Success Store Updated",
           store: params,
         });
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           status: "Id Error",
           message: error.message,
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden",
       });
     }
@@ -75,18 +75,18 @@ const controller = {
     if (helpers.compareRoles(allowedRoles, request.userRoles)) {
       try {
         const deleteStore = await Store.findByIdAndDelete(request.params.id);
-        return response.send({
+        return response.json({
           message: "Success Store Deleted",
           store: deleteStore,
         });
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           status: "Id Error",
           message: error.message,
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden",
       });
     }

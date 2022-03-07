@@ -9,14 +9,14 @@ const controller = {
     if (helpers.compareRoles(allowedRoles, request.userRoles)) {
       try {
         const roles = await Role.find({});
-        return response.status(200).send(roles);
+        return response.status(200).json(roles);
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           message: error.message,
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden",
       });
     }
@@ -31,17 +31,17 @@ const controller = {
           name: params.name,
         });
         await newRole.save();
-        return response.status(200).send({
+        return response.status(200).json({
           message: "Success Role saved",
           role: params,
         });
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           message: error.message,
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden",
       });
     }
@@ -55,18 +55,18 @@ const controller = {
         const params = request.body;
 
         await Role.findByIdAndUpdate(updateRoleId, params);
-        return response.status(201).send({
+        return response.status(201).json({
           message: "Success Role Updated",
           role: params,
         });
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           status: "Id Error",
           message: error.message,
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden",
       });
     }
@@ -77,18 +77,18 @@ const controller = {
     if (helpers.compareRoles(allowedRoles, request.userRoles)) {
       try {
         const deleteRole = await Role.findByIdAndDelete(request.params.id);
-        return response.send({
+        return response.json({
           message: "Success Role Deleted",
           service: deleteRole,
         });
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           status: "Id Error",
           message: error.message,
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden",
       });
     }

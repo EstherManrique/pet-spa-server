@@ -24,14 +24,14 @@ const controller = {
             path: "serviceId",
             model: "Service",
           });
-        return response.status(200).send(reservations);
+        return response.status(200).json(reservations);
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           message: error.message
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden"
       });
     }
@@ -51,13 +51,13 @@ const controller = {
         serviceId: params.serviceId
       });
       await newReservation.save();
-      return response.status(200).send({
+      return response.status(200).json({
         message: 'Success Reservation saved',
         reservation: newReservation
       });
       
     } catch (error) {
-      return response.status(400).send({
+      return response.status(400).json({
         message: error.message
       });
     }
@@ -72,18 +72,18 @@ const controller = {
         const options = {new: true};
     
         await Reservation.findByIdAndUpdate(updateReservation, params, options)
-          return response.status(200).send({
+          return response.status(200).json({
             message: "Success Reservation Updated",
             reservation: params,
           });
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           status: "Id Error",
           message: error.message
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden"
       });
     }
@@ -94,18 +94,18 @@ const controller = {
     if(helpers.compareRoles(allowedRoles, request.userRoles)) {
       try {
         const deleteReservation = await Reservation.findByIdAndDelete(request.params.id);
-        return response.status(200).send({
+        return response.status(200).json({
           message: "Success Reservation Deleted",
           reservation: deleteReservation,
         });
       } catch (error) {
-        return response.status(400).send({
+        return response.status(400).json({
           status: "Id Error",
           message: error.message
         });
       }
     } else {
-      return response.status(403).send({
+      return response.status(403).json({
         message: "Forbidden"
       });
     }
