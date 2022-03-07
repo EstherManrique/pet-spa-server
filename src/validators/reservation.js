@@ -15,7 +15,9 @@ const validateSave = [
     .isISO8601()
     .withMessage('Error reservation date, must be aaaa/mm/dd hh:mm'),
   check("status")
-    .exists()
+    .optional({
+      checkFalsy: false
+    })
     .not()
     .isEmpty()
     .isIn(['pending', 'confirmed', 'canceled'])
