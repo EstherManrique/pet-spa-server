@@ -16,7 +16,7 @@ const controller = {
   },
 
   save: async (request, response) => {
-    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.store.post);
+    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.stores.post);
     if (helpers.compareRoles(allowedRoles, request.userRoles)) {
       try {
         const params = request.body;
@@ -45,7 +45,7 @@ const controller = {
   },
 
   update: async (request, response) => {
-    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.store.put);
+    const allowedRoles = await helpers.getMongoRoles(accessControl.permissions.stores.put);
     if (helpers.compareRoles(allowedRoles, request.userRoles)) {
       try {
         const updateStoreId = request.params.id;
