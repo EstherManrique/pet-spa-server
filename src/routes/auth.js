@@ -7,6 +7,6 @@ const { validateSave, validateLogin } = require('../validators/auth')
 
 // Return JWT
 router.post('/auth/login', validateLogin, authController.login);
-router.post('/auth/register', validateSave, authController.register);
+router.post('/auth/register', authController.register);
 
 module.exports = router;

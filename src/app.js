@@ -52,8 +52,9 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 // Cors
 const corsOptions = {
-  origin: ['http://localhost:3000'],
-  optionsSuccessStatus: 200
+  origin: ["http://localhost:3000"],
+  optionsSuccessStatus: 200,
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 app.use(cors(corsOptions));
 // app.use(bodyParser.urlencoded({extended: false}));
